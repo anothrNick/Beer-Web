@@ -115,4 +115,4 @@ logs/*
 sessions/*
 
 # DB
-data.db
+*.db
