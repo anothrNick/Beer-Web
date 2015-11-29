@@ -1,0 +1,103 @@
+{% from "_helpers.html" import render_field %}
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button onclick="showBootModal('white')" class="mpl-btn btn-turqoise">
+                            <span></span>
+                            <i class="fa fa-plus"></i> Add Beer
+                        </button>
+                    </div>
+                </div>
+                <div class="">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Brewery</th>
+                                <th>Alcohol</th>
+                                <th>Style</th>
+                                <th>Image</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for b in beer %}
+
+                            <tr>
+                                <td>{{ b.name }}</td>
+                                <td>{{ b.brewer.name }}</td>
+                                <td>{{ b.alcohol }}</td>
+                                <td>{{ b.style.label }}</td>
+                                <td>{{ b.image }}</td>
+                                <td>{{ b.description }}</td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
+
+<div class="form-content hide">
+    <div class="row">
+        <div class="col-xs-12">
+            <form id="new-beer-form" class="mpl-form" action="{{ url_for('list_beer') }}" method="post" role="form" enctype="multipart/form-data">
+                <div class="row">
+                    {{ form.csrf_token }}
+                    <div class="col-xs-6">
+                        {{ render_field("Name", form.name, "name") }}
+                        {{ render_field("Brewery", form.brewery, "select brewery") }}
+                        {{ render_field("Style", form.style, "") }}
+                        {{ render_field("Alcohol", form.alcohol, "") }}
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="file">Image</label>
+                            <input type="file" id="file" name="file">
+                            <p class="help-block">An image of the beer bottle or logo</p>
+                        </div>
+                        {{ render_field("Description", form.description, "") }}
+                    </div>
+                </div>
+                <button class="mpl-btn btn-turqoise pull-right" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+
+<script type="text/javascript">
+function showBootModal(cls)
+{
+	var dlg = new BootstrapDialog.show({
+			type: 'mpl-dialog-'+cls,
+			title: '<h3>New Beer</h3>',
+			message: '<div><i class=\'fa fa-spin fa-spinner\'></i></div>',
+			closable: true,
+            onshown: function(){
+	            $(".bootstrap-dialog-message").html($(".form-content").html());
+            }
+		});
+
+}
+
+{% if form.errors %}
+    showBootModal('white');
+{% endif %}
+
+</script>
+{% endblock %}

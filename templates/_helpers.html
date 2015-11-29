@@ -1,0 +1,9 @@
+{% macro render_field(label, field, ph) %}
+    <div class="form-group">
+        <label>{{ label }}</label>
+        {% if field.errors %}
+        <span class="text-danger pull-right">{{ field.errors[0] }}</span>
+        {% endif %}
+        {{ field(class="form-control", placeholder=ph) }}
+    </div>
+{% endmacro %}

@@ -1,0 +1,83 @@
+{% from "_helpers.html" import render_field %}
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button onclick="showBootModal('white')" class="mpl-btn btn-turqoise">
+                            <span></span>
+                            <i class="fa fa-plus"></i> Add Size
+                        </button>
+                    </div>
+                </div>
+                <div class="">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for b in sizes %}
+
+                            <tr>
+                                <td>{{ b.label }}</td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
+
+<div class="form-content hide">
+    <div class="row">
+        <div class="col-xs-12">
+            <form id="new-form" class="mpl-form" action="{{ url_for('list_brewery_size') }}" method="post" role="form">
+                <div class="row">
+                    {{ form.csrf_token }}
+                    <div class="col-xs-12">
+                        {{ render_field("Label", form.label, "size label") }}
+                        {{ render_field("Description", form.description, "") }}
+                    </div>
+                </div>
+                <button class="mpl-btn btn-turqoise pull-right" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+
+<script type="text/javascript">
+function showBootModal(cls)
+{
+	var dlg = new BootstrapDialog.show({
+			type: 'mpl-dialog-'+cls,
+			title: '<h3>New Brewery Size</h3>',
+			message: '<div><i class=\'fa fa-spin fa-spinner\'></i></div>',
+			closable: true,
+            onshown: function(){
+	            $(".bootstrap-dialog-message").html($(".form-content").html());
+            }
+		});
+
+}
+
+{% if form.errors %}
+    showBootModal('white');
+{% endif %}
+
+</script>
+{% endblock %}

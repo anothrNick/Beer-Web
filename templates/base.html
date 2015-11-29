@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+
+      <title></title>
+
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+      <link href="{{ url_for('static', filename='plugins/bootstrap-3.3.1/css/bootstrap.min.css') }}"rel="stylesheet" type="text/css">
+
+      <link href="{{ url_for('static', filename='plugins/toastr/toastr.css') }}" rel="stylesheet" type="text/css">
+
+      <link href="{{ url_for('static', filename='plugins/bootstrap3-dialog-master/bootstrap-dialog.css') }}" rel="stylesheet" type="text/css">
+
+      <link href="{{ url_for('static', filename='plugins/morris/morris.css') }}" rel="stylesheet" type="text/css">
+
+      <link href="{{ url_for('static', filename='plugins/animate/animate.min.css') }}" rel="stylesheet" type="text/css">
+
+
+      <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+
+  </head>
+
+  <body class="">
+
+		<!-- Fixed navbar -->
+		<nav id="main-nav" class="navbar navbar-light navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div id="nav-wrap">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/ic_beer.png') }}" style="height: 40px;width: 40px;margin-left: -10px;margin-top: -10px;float: left;margin-right: 10px;">Beer</a>
+                </div>
+                <!-- /.navbar-header -->
+
+				<ul class="nav mpl-links navbar-nav-light">
+					<!--<li><a href="javascript:void(0);" onclick="$('body').toggleClass('minimize')"><i class="fa fa-bars"></i></a></li>-->
+
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle main-nav-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
+							<i class="fa fa-user"></i>
+							User
+						</a>
+						<ul class="dropdown-menu arrow arrow-right" role="menu">
+							<li><a href="#">Profile</a></li>
+							<li><a href="#">Settings</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+
+            </div>
+            <div class="mpl-sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse collapse">
+                    <ul class="nav" id="side-menu">
+
+                        <li class="{% if request.url_rule.endpoint == "list_beer" %} active {% endif %}">
+                            <a class="nav-top" id="beer-nav" href="{{ url_for('list_beer') }}"><i class="fa fa- fa-fw"></i> <span class="mpl-sidebar-text">Beer</span></a>
+                        </li>
+                        <li class="{% if request.url_rule.endpoint == "list_brewery" %} active {% endif %}">
+                            <a class="nav-top" id="brew-nav" href="{{ url_for('list_brewery') }}"><i class="fa fa- fa-fw"></i> <span class="mpl-sidebar-text">Breweries</span></a>
+                        </li>
+                        <li class="{% if request.url_rule.endpoint == "list_brewery_size" %} active {% endif %}">
+                            <a class="nav-top" id="sizes-nav" href="{{ url_for('list_brewery_size') }}"><i class="fa fa- fa-fw"></i> <span class="mpl-sidebar-text">Sizes</span></a>
+                        </li>
+                        <li class="{% if request.url_rule.endpoint == "list_style" %} active {% endif %}">
+                            <a class="nav-top" id="style-nav" href="{{ url_for('list_style') }}"><i class="fa fa- fa-fw"></i> <span class="mpl-sidebar-text">Styles</span></a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+		<!-- Begin page content -->
+		<div id="content" class="">
+			<div id="inner-content" class="animated fadeIn">
+                {% block body %}
+                <!-- BODY CONTENT -->
+                {% endblock %}
+            </div>
+			<footer class="footer">
+				<div class="container">
+					<p class="footer-text text-muted">&copy; company 2015</p>
+				</div>
+			</footer>
+        </div>
+      <!-- /#wrapper -->
+
+      <!-- SCRIPTS -->
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.3.min.js') }}"></script>
+      <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='plugins/bootstrap-3.3.1/js/bootstrap.min.js') }}"></script>
+
+      <!-- Bootrap Dialog Plugin JavaScript -->
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='plugins/bootstrap3-dialog-master/bootstrap-dialog.js') }}"></script>
+
+      <!-- Morris Plugin Javascript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='plugins/morris/morris.min.js') }}"></script>
+
+      <!-- Sparkline Plugin Javascript -->
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='plugins/sparkline/jquery.sparkline.js') }}"></script>
+
+      <!-- Toastr Plugin JavaScript -->
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='plugins/toastr/toastr.js') }}"></script>
+
+      <!-- Metis Menu Plugin JavaScript -->
+      <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='plugins/metisMenu/metisMenu.js') }}"></script>
+      <script>
+        $(function() {
+          $('#side-menu').metisMenu();
+        });
+      </script>
+
+
+      {% block scripts %}
+      {% endblock %}
+
+  </body>
+
+</html>

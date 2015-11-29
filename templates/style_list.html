@@ -1,0 +1,93 @@
+{% from "_helpers.html" import render_field %}
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button onclick="showBootModal('white')" class="mpl-btn btn-turqoise">
+                            <span></span>
+                            <i class="fa fa-plus"></i> Add Style
+                        </button>
+                    </div>
+                </div>
+                <div class="">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for b in styles %}
+
+                            <tr id="row-{{ b.id }}">
+                                <td>{{ b.label }}</td>
+                                <td><button class="close" onclick="fnDeleteStyle({{ b.id }})">×</button></td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
+
+<div class="form-content hide">
+    <div class="row">
+        <div class="col-xs-12">
+            <form id="new-form" class="mpl-form" action="{{ url_for('list_style') }}" method="post" role="form">
+                <div class="row">
+                    {{ form.csrf_token }}
+                    <div class="col-xs-12">
+                        {{ render_field("Label", form.label, "style label") }}
+                        {{ render_field("Description", form.description, "") }}
+                    </div>
+                </div>
+                <button class="mpl-btn btn-turqoise pull-right" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+
+<script type="text/javascript">
+
+function fnDeleteStyle(id)
+{
+    $("#row-"+id).remove();
+}
+
+function showBootModal(cls)
+{
+	var dlg = new BootstrapDialog.show({
+			type: 'mpl-dialog-'+cls,
+			title: '<h3>New Beer Style</h3>',
+			message: '<div><i class=\'fa fa-spin fa-spinner\'></i></div>',
+			closable: true,
+            onshown: function(){
+	            $(".bootstrap-dialog-message").html($(".form-content").html());
+            }
+		});
+
+}
+
+{% if form.errors %}
+    showBootModal('white');
+{% endif %}
+
+console.log('{{ form.errors }}');
+
+</script>
+{% endblock %}
