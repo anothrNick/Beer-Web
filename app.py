@@ -25,8 +25,24 @@ def allowed_image(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_IMAGES
 
 
+@app.route('/api/beer', methods=['GET'])
+def _api_beers():
+    beers = Beer.select()
+    json_beers = [model_to_dict(beer) for beer in beers]
+   
+    return json.dumps(json_beers, sort_keys=True, indent=4, separators=(',',': '))
+
+
+@app.route('/api/brewery', methods=['GET'])
+def _api_brewery():
+    brews = Brewery.select()
+    json_brews = [model_to_dict(brew) for brew in brews]
+    
+    return json.dumps(json_brews, sort_keys=True, indent=4, separators=(',',': '))
+
+
 @app.route('/api/beer/styles', methods=['GET'])
-def apiStyles():
+def _api_styles():
     styles = BeerStyle.select()
     json_styles = [model_to_dict(style) for style in styles]
 
