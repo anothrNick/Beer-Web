@@ -3,6 +3,10 @@ from flask import Flask, redirect, request, render_template, url_for, jsonify, g
 from model import *
 from forms import *
 from werkzeug.utils import secure_filename
+#from flask_peewee.rest import RestAPI
+import json
+#from bson import json_util
+from playhouse.shortcuts import *
 
 app = Flask(__name__)
 app.secret_key = 'asdopiasdijnnrnkjasdkjlkbababooey'
@@ -10,9 +14,23 @@ app.config['IMAGES'] = 'static/upload/images/'
 
 ALLOWED_IMAGES = set(['png', 'jpg', 'jpeg'])
 
+#api = RestAPI(app)
+
+#api.register(BeerStyle)
+
+#api.setup()
+
 
 def allowed_image(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_IMAGES
+
+
+@app.route('/api/beer/styles', methods=['GET'])
+def apiStyles():
+    styles = BeerStyle.select()
+    json_styles = [model_to_dict(style) for style in styles]
+
+    return json.dumps(json_styles, sort_keys=True, indent=4, separators=(',',': '))
 
 
 @app.route('/', methods=['GET', 'POST'])
