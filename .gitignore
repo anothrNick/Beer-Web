@@ -2,7 +2,7 @@
 ### JetBrains template
 # project specific
 backup/
-
+static/upload/images/*
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
 *.iml
